@@ -12,14 +12,12 @@ module ActiveScaffold
 
         where_clauses = []
         columns.each do |column|
-          where_clauses << ((column.column.nil? || column.column.text?) ? "LOWER(#{column.search_sql}) LIKE ?" : "#{column.search_sql} = ?")
+          where_clauses << "LOWER(#{column.search_sql}) LIKE ?"
         end
         phrase = "(#{where_clauses.join(' OR ')})"
 
         sql = ([phrase] * tokens.length).join(' AND ')
-        tokens = tokens.collect do |value|
-          columns.collect {|column| (column.column.nil? || column.column.text?) ? like_pattern.sub('?', value.downcase) : column.column.type_cast(value)}
-        end.flatten
+        tokens = tokens.collect{ |value| [like_pattern.sub('?', value.downcase)] * where_clauses.length }.flatten
 
         [sql, *tokens]
       end
