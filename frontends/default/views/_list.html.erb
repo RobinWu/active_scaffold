@@ -10,9 +10,13 @@
         <div id="<%= active_scaffold_messages_id -%>">
           <%= render :partial => 'messages' %>
         </div>
+        <!--
+        11月17日09：43 by tom
+        删除搜索后的过滤提示
         <p class="filtered-message" <%= ' style="display:none;" ' unless @filtered %>>
-          <%= as_(active_scaffold_config.list.filtered_message) %>
+          <%#= as_(active_scaffold_config.list.filtered_message) %>
         </p>
+        -->
         <p id="<%= empty_message_id %>" class="empty-message" <%= ' style="display:none;" ' unless @page.items.empty? %>>
           <%= as_(active_scaffold_config.list.no_entries_message) %>
         </p>
